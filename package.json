@@ -1,0 +1,19 @@
+{
+  "name": "e-commerce-backend",
+  "version": "1.0.0",
+  "description": "e-commerce API, includes: SOA Architecture, Routes, Services, Middlewares and other features that complements a REST API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinmora47/e-commerce-backend.git"
+  },
+  "author": "Kevin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevinmora47/e-commerce-backend/issues"
+  },
+  "homepage": "https://github.com/kevinmora47/e-commerce-backend#readme"
+}
