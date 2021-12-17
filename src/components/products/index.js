@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const ProductController = require('./controller/ProductController');
+const authAdmin = require('../../middlewares/authMiddleware');
 
 const router = new Router();
 const productsRouter = async (app) => {
@@ -12,22 +13,22 @@ const productsRouter = async (app) => {
   });
 
   // Get product by id.
-  app.get('/products/:id', (req, res) => {
+  app.get('/products/:id', authAdmin, (req, res) => {
     res.json(ProductController.getProductById(Number(req.params.id)));
   });
 
   // Delete product by id.
-  app.delete('/product/:id', (req, res) => {
+  app.delete('/product/:id', authAdmin, (req, res) => {
     res.json(ProductController.deleteProductById(Number(req.params.id)));
   });
 
   // Create product.
-  app.post('/product', (req, res) => {
+  app.post('/product', authAdmin, (req, res) => {
     res.json(ProductController.createProduct(req.body));
   });
 
   // Update product.
-  app.put('/product/:id', (req, res) => {
+  app.put('/product/:id', authAdmin, (req, res) => {
     res.json(ProductController.updateProduct(Number(req.params.id), req.body));
   });
 };

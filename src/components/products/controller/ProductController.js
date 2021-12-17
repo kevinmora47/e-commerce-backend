@@ -1,10 +1,9 @@
-const ProductModel = require('../../../models/ProductModel');
+const ProductService = require('../services/ProductService');
 
 class ProductController {
   getAllProducts() {
     try {
-      const response = ProductModel;
-      return { success: true, data: response };
+      return ProductService.getAllProducts();
     } catch (err) {
       return { success: false, data: err };
     }
@@ -12,9 +11,7 @@ class ProductController {
 
   getProductById(id) {
     try {
-      const response = ProductModel.find((product) => product.id === id);
-      console.log(response);
-      return { success: true, data: response };
+      return ProductService.getProductById(id);
     } catch (err) {
       return { success: false, data: err };
     }
@@ -22,9 +19,7 @@ class ProductController {
 
   deleteProductById(id) {
     try {
-      const index = ProductModel.findIndex((product) => product.id === id);
-      const response = ProductModel.splice(index, 1);
-      return { success: true, data: { productDeleted: response } };
+      return ProductService.deleteProductById(id);
     } catch (err) {
       return { success: false, data: err };
     }
@@ -32,8 +27,7 @@ class ProductController {
 
   createProduct(product) {
     try {
-      const response = ProductModel.push(product);
-      return { success: true, data: { productCreated: product } };
+      return ProductService.createProduct(product);
     } catch (err) {
       return { success: false, data: err };
     }
@@ -41,11 +35,7 @@ class ProductController {
 
   updateProduct(id, product) {
     try {
-      const index = ProductModel.findIndex(
-        (productFound) => productFound.id === id
-      );
-      const response = ProductModel.splice(index, 1, product);
-      return { success: true, data: { productUpdatedAtIndex: response } };
+      return ProductService.updateProduct(id, product);
     } catch (err) {
       return { success: false, data: err };
     }

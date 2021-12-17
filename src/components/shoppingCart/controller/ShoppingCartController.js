@@ -1,10 +1,9 @@
-const ShoppingCart = require('../../../models/ShoppingCartModel');
+const ShoppingCartService = require('../services/shoppingCartService');
 
-class ProductController {
-  getAllProducts() {
+class ShoppingCartController {
+  getAllCarts() {
     try {
-      const response = ShoppingCart;
-      return { success: true, data: response };
+      return ShoppingCartService.getAllCarts();
     } catch (err) {
       return { success: false, data: err };
     }
@@ -12,9 +11,7 @@ class ProductController {
 
   getProductById(id) {
     try {
-      const response = ShoppingCart.find((product) => product.id === id);
-      console.log(response);
-      return { success: true, data: response };
+      return ShoppingCartService.getCartById(id);
     } catch (err) {
       return { success: false, data: err };
     }
@@ -22,9 +19,7 @@ class ProductController {
 
   deleteProductById(id) {
     try {
-      const index = ShoppingCart.findIndex((product) => product.id === id);
-      const response = ShoppingCart.splice(index, 1);
-      return { success: true, data: { productDeleted: response } };
+      return ShoppingCartService.deleteCartById(id);
     } catch (err) {
       return { success: false, data: err };
     }
@@ -32,8 +27,7 @@ class ProductController {
 
   createProduct(product) {
     try {
-      const response = ShoppingCart.push(product);
-      return { success: true, data: { productCreated: product } };
+      return ShoppingCartService.createCart(product);
     } catch (err) {
       return { success: false, data: err };
     }
@@ -41,15 +35,11 @@ class ProductController {
 
   updateProduct(id, product) {
     try {
-      const index = ShoppingCart.findIndex(
-        (productFound) => productFound.id === id
-      );
-      const response = ShoppingCart.splice(index, 1, product);
-      return { success: true, data: { productUpdatedAtIndex: response } };
+      return ShoppingCartService.updateCart(id, product);
     } catch (err) {
       return { success: false, data: err };
     }
   }
 }
 
-module.exports = new ProductController();
+module.exports = new ShoppingCartController();
