@@ -1,10 +1,18 @@
 const ProductModel = require('../../../models/ProductModel');
+const { db: firebaseDB } = require('../../../utils/firebase/index');
 
 class ProductService {
-  getAllProducts() {
+  async getAllProducts() {
     try {
-      const response = ProductModel;
-      return { success: true, data: response };
+      let values;
+      const response = await firebaseDB.get();
+      response.forEach((product) => {
+        values = {
+          id: product.id,
+          ...product.data(),
+        };
+      });
+      return { success: true, data: values };
     } catch (err) {
       return { success: false, data: err };
     }
@@ -33,29 +41,22 @@ class ProductService {
   createProduct(product) {
     try {
       if (product.isAdmin) {
-        const response = ProductModel.push(product);
+        firebaseDB.collection('products').add(product);
         return {
           success: true,
           data: { productCreated: product },
-          response,
         };
       }
-      return { success: false, data: 'Unauthorized' };
+      return { success: false, data: 'Hi' };
     } catch (err) {
-      return { success: false, data: err };
+      return { success: false, err };
     }
   }
 
   updateProduct(id, product) {
     try {
-      if (product.isAdmin) {
-        const index = ProductModel.findIndex(
-          (productFound) => productFound.id === id
-        );
-        const response = ProductModel.splice(index, 1, product);
-        return { success: true, data: { productUpdatedAtIndex: response } };
-      }
-      return { success: false, data: 'Unauthorized' };
+      const response = firebaseDB.doc(id).update({ name: product.name });
+      return { success: true, data: { productUpdatedAtIndex: response } };
     } catch (err) {
       return { success: false, data: err };
     }
